@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <header>
+            <a href="{% url 'home' %}" class="logo">Sys<span>te</span>m</a>
+            <ul class="navlist">
+                <li class="{% if request.path == '/about/' %} active {% endif %}"><a href="{% url 'about' %}">About_Us</a></li>
+                <li class="{% if request.path == '/blog/' %} active {% endif %}"><a href="{% url 'blog' %}">Blog</a></li>
+                <li class="{% if request.path == '/contact/' %} active {% endif %}"><a href="{% url 'contact' %}">Contact</a></li>
+                <li class="{% if request.path == '/login/' %} active {% endif %}"><a href="{% url 'login' %}">Login</a></li>
+                <li class="{% if request.path == '/registration/' %} active {% endif %}"><a href="{% url 'registration' %}">Register</a></li>
+            </ul>
+            </header>
+        
+
+        <!---------------Contact Section---------->
+
+<section class="contact" id="contact">
+    <div class="contact-text">
+        <h2>Contact<span>Me!</span></h2>
+        <h4>If you have any project in your mind.</h4>
+        <p>I am a website designer, creating bold and brave interface design for companies all across the world.</p>
+        <div class="list">
+            <li><a href="#">0123456789</a></li>
+            <li><a href="#">nischal123321@gmail.com</a></li>
+            <li><a href="#">[like share & subscribe]</a></li>
+
+        </div>
+        <div class="contact-icons">
+            <a href="#" ><i class='bx bxl-facebook'></i></a>
+            <a href="#" ><i class='bx bxl-twitter'></i></a>
+            <a href="#" ><i class='bx bxl-instagram'></i></a>
+            <a href="#" ><i class='bx bxl-youtube'></i></a>
+        </div>
+    </div>
+    <div class="contact-form">
+        <form  method="post" action=".">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <div class="form-col">
+         <button type="submit">Send Message</button>
+        </div> 
+        </form>
+    </div>
+</section>
+
+    </body>
+</html>
+{% endblock %}

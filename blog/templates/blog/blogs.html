@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/static/style.css">
+        <style>
+            .center {
+              text-align: center;
+            }
+            
+            .pagination {
+              display: inline-block;
+            }
+            
+            .pagination a {
+              color: white;
+              float: left;
+              padding: 8px 16px;
+              text-decoration: none;
+              transition: background-color .3s;
+              border: 1px solid #ddd;
+              margin: 0 4px;
+            }
+            
+            .pagination a.active {
+              background-color:#05b4ff;
+              color: black;
+              border: 1px solid #05b4ff;
+            }
+            
+            .pagination a:hover:not(.active) {background-color: #ddd;}
+            </style>
+    </head>
+    <body>
+          
+      <header>
+        <a href="{% url 'home' %}" class="logo">Sys<span>te</span>m</a>
+        <ul class="navlist">
+            <li class="{% if request.path == '/about/' %} active {% endif %}"><a href="{% url 'about' %}">About_Us</a></li>
+            <li class="{% if request.path == '/blogs/' %} active {% endif %}"><a href="{% url 'blogs' %}">Blogs</a></li>
+            <li class="{% if request.path == '/contact/' %} active {% endif %}"><a href="{% url 'contact' %}">Contact</a></li>
+            <li class="{% if request.path == '/login/' %} active {% endif %}"><a href="{% url 'login' %}">Log In</a></li>
+            <li class="{% if request.path == '/registration/' %} active {% endif %}"><a href="{% url 'registration' %}">Register</a></li>
+        </ul>
+        </header>
+    
+    <!------------Services section------->
+    <section class="services" id="services">
+      <div class="main-text">
+          <h2><span>Our</span>Blogs</h2>
+      </div>
+    
+        <!-- Searching the services-->
+<div class="center">
+        <form method="get">
+            <input type="text" name="blogname" value="" />
+            <input type="submit" value="Search"/>
+        </form>
+</div>
+        <div class="services-content">
+    
+            {% for n in blogsData %}
+    
+            <div class="box">
+              <div class="s-icons">
+                <img src="{{ n.blog_image.url }}" alt="{{ n.blog_title }}" style="width: 100px; height: 100px; object-fit: cover;">
+            </div>
+                     
+                <h3>{{n.blog_title}}</h3>
+                <p>{{n.blog_des}}</p>
+                <a href="#" class="btn">Read more</a>
+            </div>
+     
+            {% empty %}
+            No Blog Found
+            {% endfor %}
+    
+    </section>
+
+<!-- Pagination Concept -->
+
+    <div class="center">
+        <div class="pagination">
+
+        {% if blogsData.has_previous %}
+        <a href="/blog/blog/?page=1">First</a>
+        <a href="/blog/blog/?page={{blogsData.previous_page_number}}">Previous</a>
+        {% endif %}
+   
+        {% for n in totalPagelist %}
+        <a href="/blog/blog/?page={{n}}">{{n}}</a>
+        {% endfor %}
+
+        {% if blogsData.has_next %}
+        <a href="/blog/blog/?page={{blogsData.next_page_number}}">Next</a>
+        <a href="/blog/blog/?page={{lastpage}}">Last</a>
+        {% endif %}
+        
+        </div>
+      </div>
+    
+     </body>
+</html>
+{% endblock %}
